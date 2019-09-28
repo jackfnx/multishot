@@ -16,7 +16,7 @@ local timeLineStart, timeLineElapsed
 
 function Multishot:OnEnable()
   self:RegisterEvent("PLAYER_LEVEL_UP")
-  self:RegisterEvent("UNIT_GUILD_LEVEL")
+  -- self:RegisterEvent("UNIT_GUILD_LEVEL")
   self:RegisterEvent("ACHIEVEMENT_EARNED")
   self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
   self:RegisterEvent("UPDATE_BATTLEFIELD_STATUS")
@@ -24,7 +24,7 @@ function Multishot:OnEnable()
   self:RegisterEvent("CHAT_MSG_SYSTEM")
   self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
   self:RegisterEvent("PLAYER_REGEN_ENABLED")
-  self:RegisterEvent("GARISSON_BUILDING_ACTIVATED")
+  -- self:RegisterEvent("GARISSON_BUILDING_ACTIVATED")
   self:RegisterEvent("SCREENSHOT_FAILED", "Debug")
   if MultishotConfig.timeLineEnable then
   	self.timeLineTimer = self:ScheduleRepeatingTimer("TimeLineProgress",5)
@@ -43,9 +43,9 @@ function Multishot:PLAYER_LEVEL_UP(strEvent)
   if MultishotConfig.levelup then self:ScheduleTimer("CustomScreenshot", MultishotConfig.delay1, strEvent) end
 end
 
-function Multishot:UNIT_GUILD_LEVEL(strEvent, strUnit)
-  if MultishotConfig.guildlevelup and strUnit == "player" then self:ScheduleTimer("CustomScreenshot", MultishotConfig.delay1, strEvent) end
-end
+-- function Multishot:UNIT_GUILD_LEVEL(strEvent, strUnit)
+--   if MultishotConfig.guildlevelup and strUnit == "player" then self:ScheduleTimer("CustomScreenshot", MultishotConfig.delay1, strEvent) end
+-- end
 
 function Multishot:ACHIEVEMENT_EARNED(strEvent, intId)
   if MultishotConfig.guildachievement and select(12, GetAchievementInfo(intId)) then self:ScheduleTimer("CustomScreenshot", MultishotConfig.delay1, strEvent) end
@@ -117,11 +117,11 @@ function Multishot:TIME_PLAYED_MSG(strEvent, total, thislevel)
   self:UnregisterEvent("TIME_PLAYED_MSG")
 end
 
-function Multishot:GARISSON_BUILDING_ACTIVATED(strEvent, arg1, arg2)
-	if MultishotConfig.garissonbuild then
-		self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
-	end
-end
+-- function Multishot:GARISSON_BUILDING_ACTIVATED(strEvent, arg1, arg2)
+-- 	if MultishotConfig.garissonbuild then
+-- 		self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
+-- 	end
+-- end
 
 function Multishot:COMBAT_LOG_EVENT_UNFILTERED(strEvent, ...)
   local strType, _, sourceGuid, _, _, _, destGuid = select(2, ...) -- 4.1 compat, 4.2 compat
